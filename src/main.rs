@@ -3,7 +3,7 @@ extern crate rand;
 use rand::Rng;
 use std::env;
 
-fn cost(t: [[f32; 2]; 5], w: f32, b: f32) -> f32 {
+fn cost(t: &Vec<Vec<f32>>, w: f32, b: f32) -> f32 {
     let mut r: f32 = 0.0;
     for pair in t {
         let val = pair[0];
@@ -16,7 +16,13 @@ fn cost(t: [[f32; 2]; 5], w: f32, b: f32) -> f32 {
 }
 
 fn main() {
-    let t: [[f32; 2]; 5] = [[0.0, 0.0], [1.0, 2.0], [2.0, 4.0], [3.0, 6.0], [4.0, 8.0]];
+    let t = vec![
+        vec![0.0, 0.0],
+        vec![1.0, 2.0],
+        vec![2.0, 4.0],
+        vec![3.0, 6.0],
+        vec![4.0, 8.0],
+    ];
 
     let mut r: u32 = 5;
     let tmp: Vec<String> = env::args().collect();
@@ -31,9 +37,9 @@ fn main() {
     let rate: f32 = 1e-3;
 
     for _i in 0..r {
-        let c = cost(t, w, b);
-        let dcostw = (cost(t, w + eps, b) - c) / eps;
-        let dcostb = (cost(t, w, b + eps) - c) / eps;
+        let c = cost(&t, w, b);
+        let dcostw = (cost(&t, w + eps, b) - c) / eps;
+        let dcostb = (cost(&t, w, b + eps) - c) / eps;
         w = w - rate * dcostw;
         b = b - rate * dcostb;
         /* println!("{} {} {} {} {}", c, dcostw, dcostb, w, b); */
