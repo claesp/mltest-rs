@@ -12,7 +12,7 @@ fn cost(t: [[f32; 2]; 5], w: f32, b: f32) -> f32 {
         let dif = act - exp;
         r = r + (dif * dif);
     }
-    return r / 5.0; /* TODO: Fix this; should be number of elements in t. */
+    return r / t.len() as f32;
 }
 
 fn main() {
